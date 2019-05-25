@@ -39,11 +39,17 @@ class App extends Component {
 
 
   render() {
+
+    const buttonStyle = {
+      backgroundColor : 'green',
+      padding: '8px',
+      marginTop: '12px'
+    };
     return (
       <div className="App">
      <h1>Hello I am Maxmillar</h1>
 
-     <button onClick = {this.switchNameHandler.bind(this , 'Saajan Saajan')}>Switch Name </button> 
+     <button style = {buttonStyle} onClick = {this.switchNameHandler.bind(this , 'Saajan Saajan')}>Switch Name </button> 
      <Person age={this.state.persons[0].age} name={this.state.persons[0].name}/>
      <Person age={this.state.persons[1].age} name={this.state.persons[1].name}/>
      <Person changed = {this.nameChangeHandler} age={this.state.persons[2].age} name={this.state.persons[2].name}
