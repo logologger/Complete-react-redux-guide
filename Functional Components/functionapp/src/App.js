@@ -16,25 +16,27 @@ class App extends Component {
     showPersons : false
   };
 
-  switchNameHandler = (qualifiedName) => {
-    console.log("clicked")
-    this.setState ( {
-      persons : [
-        {name: qualifiedName , age :21},
-        {name: 'Muthu Subba', age : 20},
-        {name: 'JaiSinghaa', age : 10}
-      ]
-    });
-    /* React wont override the state which are not changed , it will just update the one which is change */
-  }
+  // switchNameHandler = (qualifiedName) => {
+  //   console.log("clicked")
+  //   this.setState ( {
+  //     persons : [
+  //       {name: qualifiedName , age :21},
+  //       {name: 'Muthu Subba', age : 20},
+  //       {name: 'JaiSinghaa', age : 10}
+  //     ]
+  //   });
+  //   /* React wont override the state which are not changed , it will just update the one which is change */
+  // }
 
-  nameChangeHandler = (event) => {
+  nameChangeHandler = (event, index) => {
+
+    const person = {...this.state.persons[index]};
+    person.name = event.target.value;
+
+    const persons = [...this.state.persons];
+    persons[index] = person;
     this.setState ( {
-      persons : [
-        {name: 'Rajat Babu' , age :21},
-        {name: 'okok', age : 20},
-        {name:  event.target.value, age : 10}
-      ]
+      persons : persons
     });
   }
   
@@ -45,6 +47,13 @@ class App extends Component {
     })
   }
 
+  deletePersonHandler = (index) => {
+    //const persons = this.state.persons.slice(); // returns a new array from begin to end
+    const persons = [...this.state.persons]; // Spread Operator is the preferred way
+    persons.splice(index , 1); // you should not mutate the state 
+    this.setState({persons:persons});
+  }
+
   render() {
 
     const buttonStyle = {
@@ -52,26 +61,30 @@ class App extends Component {
       padding: '8px',
       marginTop: '12px'
     };
+
+    let persons = null;
+
+    if(this.state.showPersons) {
+      persons = (
+        <div >
+          {this.state.persons.map ( (person, index) => {
+              return <Person click={this.deletePersonHandler.bind(this, index)}
+              key = {index}  
+              changed = {(event) => { this.nameChangeHandler(event, index)}}
+              name = {person.name}
+              age = {person.age}/>
+          })}
+         
+      </div>
+      );
+    }
     return (
       <div className="App">
      <h1>Hello I am Maxmillar</h1>
 
      <button style = {buttonStyle} onClick = {this.togglePersonHandlder }>Switch Name </button> 
-    {
-       this.state.showPersons ? 
-        <div >
-          <Person age={this.state.persons[0].age} name={this.state.persons[0].name}/>
-          <Person age={this.state.persons[1].age} name={this.state.persons[1].name}/>
-          <Person changed = {this.nameChangeHandler} age={this.state.persons[2].age} name={this.state.persons[2].name}
-          click = { () =>  this.switchNameHandler('Thoran')}
-          >
-            This is test !!!
-          </Person>
-          {this.state.guys.name}
-
-        </div>
-      : null 
-     }
+      
+      { persons }
 
 
       </div>
