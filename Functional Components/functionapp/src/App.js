@@ -27,6 +27,16 @@ class App extends Component {
     /* React wont override the state which are not changed , it will just update the one which is change */
   }
 
+  nameChangeHandler = (event) => {
+    this.setState ( {
+      persons : [
+        {name: 'Rajat Babu' , age :21},
+        {name: 'okok', age : 20},
+        {name:  event.target.value, age : 10}
+      ]
+    });
+  }
+
 
   render() {
     return (
@@ -36,7 +46,7 @@ class App extends Component {
      <button onClick = {this.switchNameHandler.bind(this , 'Saajan Saajan')}>Switch Name </button> 
      <Person age={this.state.persons[0].age} name={this.state.persons[0].name}/>
      <Person age={this.state.persons[1].age} name={this.state.persons[1].name}/>
-     <Person age={this.state.persons[2].age} name={this.state.persons[2].name}
+     <Person changed = {this.nameChangeHandler} age={this.state.persons[2].age} name={this.state.persons[2].name}
      click = { () =>  this.switchNameHandler('Thoran')}
      >
       This is test !!!
