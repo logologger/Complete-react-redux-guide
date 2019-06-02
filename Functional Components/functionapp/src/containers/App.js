@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
-import Person from './Person/Person';
-import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
+import Person from '../components/Persons/Person/Person';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
 
@@ -57,57 +59,43 @@ class App extends Component {
 
   render() {
 
-    const buttonStyle = {
-      backgroundColor : 'green',
-      padding: '8px',
-      marginTop: '12px'
-    };
-
+   
     let persons = null;
 
-    if(this.state.showPersons) {
-      buttonStyle.backgroundColor = 'red';
+ if(this.state.showPersons) {
      
       persons = (
        
         <div >
-          {this.state.persons.map ( (person, index) => {
-              return  <ErrorBoundary>
-                <Person click={this.deletePersonHandler.bind(this, index)}
-              key = {index}  
-              changed = {(event) => { this.nameChangeHandler(event, index)}}
-              name = {person.name}
-              age = {person.age}/>
-              </ErrorBoundary>
-          })}
+         
+         <Persons 
+         persons = {this.state.persons }
+         clicked = {this.deletePersonHandler}
+         changed = {this.nameChangeHandler}/>
          
       </div>
      
       );
-    }
+ }
+    
 
-    let classes = [];
-
-    if(this.state.persons.length <=2) {
-      classes.push('red');
-    }
-    else if (this.state.persons.length <=1) {
-      classes.push('bold')
-    }
+    
 
     return (
      
       <div className="App">
-        <h1 className = {classes.join(' ')} >Hello I am Maxmillar</h1>
+       
+          <Cockpit 
+          clicked = {this.togglePersonHandlder}
+          persons = {this.state.persons}
+          showPersons = {this.state.showPersons} />
 
-        <button style = {buttonStyle} onClick = {this.togglePersonHandlder }>Switch Name </button> 
-          
           { persons }
 
 
       </div>
      
-    );
+    )
   }
 }
 
