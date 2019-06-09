@@ -4,6 +4,7 @@ import Person from '../components/Persons/Person/Person';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
+import withClass from '../components/hoc/withClass';
 
 class App extends Component {
 
@@ -57,6 +58,30 @@ class App extends Component {
     this.setState({persons:persons});
   }
 
+
+ /*  Lifecycle Methods */
+
+ static getDerivedStateFromProps(props , state) {
+   console.log('[App.js] getDerivedStateFromProps')
+   return state;
+ }
+
+ componentDidMount() {
+   console.log('[App.js] componentDidMount')
+ }
+
+
+ shouldComponentUpdate(props , state) {
+   console.log('[App.js] shouldComponentUpdate');
+   return true;
+ }
+
+ componentDidUpdate() {
+   console.log('[App.js] componentDidUpdate')
+ }
+
+
+
   render() {
 
    
@@ -77,6 +102,10 @@ class App extends Component {
      
       );
  }
+
+
+
+  
     
 
     
@@ -99,7 +128,7 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withClass(App , 'wow');
 
 /*
   This  is not a functional Component , 
