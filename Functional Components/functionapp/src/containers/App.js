@@ -17,7 +17,8 @@ class App extends Component {
     guys : {
       "name":"SinghSaab"
     },
-    showPersons : false
+    showPersons : false,
+    counterChanged : 0
   };
 
   // switchNameHandler = (qualifiedName) => {
@@ -39,9 +40,13 @@ class App extends Component {
 
     const persons = [...this.state.persons];
     persons[index] = person;
-    this.setState ( {
-      persons : persons
-    });
+    this.setState ((prevState , props) => 
+    {
+      return  {
+      persons : persons,
+      counterChanged : prevState.counterChanged + 1
+    }
+  });
   }
   
   togglePersonHandlder = () => {

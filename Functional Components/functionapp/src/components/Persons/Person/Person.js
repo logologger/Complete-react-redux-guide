@@ -21,6 +21,7 @@
 
 import React , {Component}  from 'react';
 import './Person.css';
+import PropTypes from 'prop-types';
 
 class Person extends Component{
 
@@ -35,6 +36,13 @@ class Person extends Component{
         </div>
     )
    }
+}
+
+Person.propTypes = {
+    click : PropTypes.func,
+    name : PropTypes.string,
+    age: PropTypes.number,
+    changed :PropTypes.func
 }
 
 export default Person;
